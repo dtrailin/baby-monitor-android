@@ -4,13 +4,59 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+
+import java.net.URISyntaxException;
+
+
 
 public class MainActivity extends AppCompatActivity {
+
+    private Emitter.Listener onCry = new Emitter.Listener() {
+        @Override
+        public void call(final Object.. args) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            });
+        }
+    };
+
+    private Socket mSocket;
+    {
+        try {
+            mSocket = IO.socket("http://baby-monitor.azurewebsites.net:7777");
+        } catch (URISyntaxException e) {}
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        socket stuff
+
+        mSocket.connect();
+        mSocket.emit("cry","this is a test");
+
+
+        Button button = (Button) findViewById(R.id.button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("button pressed");
+                mSocket.emit("cry","mat pressed a button!!");
+            }
+        });
+
     }
 
     @Override
