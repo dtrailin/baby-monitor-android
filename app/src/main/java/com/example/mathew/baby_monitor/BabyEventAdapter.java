@@ -1,25 +1,47 @@
 package com.example.mathew.baby_monitor;
 
-import android.support.v7.widget.RecyclerView;
+import android.content.Context;
+import android.database.Cursor;
+import android.support.v4.widget.CursorAdapter;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.TextView;
 
 /**
  * Created by denis on 28/02/16.
  */
-public class BabyEventAdapter extends RecyclerView.Adapter {
+public class BabyEventAdapter  extends CursorAdapter {
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+    public static final String REASON = "reason";
+
+    public BabyEventAdapter(Context context, Cursor cursor, int flags) {
+        super(context, cursor, 0);
     }
 
+    // The newView method is used to inflate a new view and return it,
+    // you don't bind any data to the view at this point.
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        return LayoutInflater.from(context).inflate(R.layout.baby_event_item, parent, false);
     }
 
+    // The bindView method is used to bind all data to a given view
+    // such as setting the text on a TextView.
     @Override
-    public int getItemCount() {
-        return 0;
+    public void bindView(View view, Context context, Cursor cursor) {
+        // Find fields to populate in inflated template
+        TextView reason = (TextView) view.findViewById(R.id.eventName);
+        TextView date = (TextView) view.findViewById(R.id.tvEventTime);
+        CheckBox checkBox = (CheckBox) view.findViewById(R.id.hasBeenSeen);
+        // Extract properties from cursor
+        String name = cursor.getString(cursor.getColumnIndexOrThrow(REASON));
+        String priority = cursor.getString(cursor.getColumnIndexOrThrow("timestamp"));
+        boolean responded = cursor.getInt(cursor.getColumnIndexOrThrow("responded")) > 0;
+        // Populate fields with extracted properties
+        reason.setText(name);
+        date.setText(String.valueOf(priority));
+
     }
 }

@@ -14,8 +14,8 @@ public class BabyEvents extends Model {
 
     @Column(name = "reason")
     private String reason;
-    @Column(name = "timestamp", index = true)
-    private Date timeReceived;
+    @Column(name = "timestamp")
+    private String timeReceived;
     @Column(name = "responded")
     private boolean responded;
 
@@ -28,11 +28,11 @@ public class BabyEvents extends Model {
         this.reason = reason;
     }
 
-    public Date getTimeReceived() {
+    public String getTimeReceived() {
         return timeReceived;
     }
 
-    public void setTimeReceived(Date timeReceived) {
+    public void setTimeReceived(String timeReceived) {
         this.timeReceived = timeReceived;
     }
 
@@ -44,7 +44,7 @@ public class BabyEvents extends Model {
         this.responded = responded;
     }
 
-    public BabyEvents(String reason, Date timeReceived) {
+    public BabyEvents(String reason, String timeReceived) {
 
         this.reason = reason;
         this.timeReceived = timeReceived;
