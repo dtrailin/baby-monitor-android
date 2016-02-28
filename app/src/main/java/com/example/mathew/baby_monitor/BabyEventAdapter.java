@@ -16,7 +16,7 @@ public class BabyEventAdapter  extends CursorAdapter {
 
     public static final String REASON = "reason";
 
-    public BabyEventAdapter(Context context, Cursor cursor, int flags) {
+    public BabyEventAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0);
     }
 

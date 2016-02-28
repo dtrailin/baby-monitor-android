@@ -1,12 +1,15 @@
 package com.example.mathew.baby_monitor;
 
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +27,14 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("button pressed");
             }
         });
-
+// Find ListView to populate
+        ListView lvItems = (ListView) findViewById(R.id.babyEventList);
+// Get data cursor
+        Cursor todoCursor = BabyEvent.fetchResultCursor();
+// Setup cursor adapter
+        BabyEventAdapter todoAdapter = new BabyEventAdapter(this, todoCursor);
+// Attach cursor adapter to ListView
+        lvItems.setAdapter(todoAdapter);
     }
 
     @Override
