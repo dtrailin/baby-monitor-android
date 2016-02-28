@@ -2,6 +2,7 @@ package com.example.mathew.baby_monitor;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    
+                    Log.d("stuff","cry listener working!!");
                 }
             });
         }
@@ -44,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
 //        socket stuff
 
         mSocket.connect();
-        mSocket.emit("cry","this is a test");
+        mSocket.emit("cry", "this is a test");
+        mSocket.on("cry", onCry);
 
 
         Button button = (Button) findViewById(R.id.button);
