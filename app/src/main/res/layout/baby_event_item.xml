@@ -2,26 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <TextView
         android:id="@+id/eventName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Crying"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-    <TextView
-        android:id="@+id/tvEventTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="big long time"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
     <TextView
         android:id="@+id/tempView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="10dp"
         android:text="big long time"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -29,4 +26,14 @@
         android:id="@+id/hasBeenSeen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+        </LinearLayout>
+    <TextView
+        android:id="@+id/tvEventTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="15sp"
+        android:text="big long time"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 </LinearLayout>
