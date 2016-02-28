@@ -15,27 +15,16 @@ import com.github.nkzawa.socketio.client.Socket;
 import java.net.URISyntaxException;
 
 
-
 public class MainActivity extends AppCompatActivity {
 
-    private Emitter.Listener onCry = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            MainActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d("stuff","Cry listener working!!");
-                }
-            });
-        }
-    };
-
     private Socket mSocket;
+
     {
         try {
 //            mSocket = IO.socket("http://baby-monitor.azurewebsites.net:7777");
             mSocket = IO.socket("http://45.79.134.17:7777");
-        } catch (URISyntaxException e) {}
+        } catch (URISyntaxException e) {
+        }
     }
 
     @Override
@@ -49,14 +38,13 @@ public class MainActivity extends AppCompatActivity {
         mSocket.emit("cry", "this is a test");
 
 
-
         Button button = (Button) findViewById(R.id.button);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("button pressed");
-                mSocket.emit("cry","Mat pressed a button!!");
+                mSocket.emit("cry", "Mat pressed a button!!");
             }
         });
 
@@ -91,4 +79,16 @@ public class MainActivity extends AppCompatActivity {
         mSocket.disconnect();
         mSocket.off("cry", onCry);
     }
+
+    private Emitter.Listener onCry = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("stuff", "Cry listener working!!");
+                }
+            });
+        }
+    };
 }
