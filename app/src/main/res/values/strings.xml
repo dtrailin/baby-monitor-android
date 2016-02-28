@@ -2,5 +2,6 @@
     <string name="app_name">baby-monitor</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="page_title">Recent Baby Cries:</string>
     <string name="action_settings">Settings</string>
 </resources>

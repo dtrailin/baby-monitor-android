@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.d("stuff","cry listener working!!");
+                    Log.d("stuff","Cry listener working!!");
                 }
             });
         }
@@ -33,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private Socket mSocket;
     {
         try {
-            mSocket = IO.socket("http://baby-monitor.azurewebsites.net:7777");
+//            mSocket = IO.socket("http://baby-monitor.azurewebsites.net:7777");
+            mSocket = IO.socket("http://45.79.134.17:7777");
         } catch (URISyntaxException e) {}
     }
 
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("button pressed");
-                mSocket.emit("cry","mat pressed a button!!");
+                mSocket.emit("cry","Mat pressed a button!!");
             }
         });
 
