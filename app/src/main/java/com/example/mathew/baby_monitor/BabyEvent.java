@@ -22,7 +22,16 @@ public class BabyEvent extends Model {
     private String timeReceived;
     @Column(name = "responded")
     private boolean responded;
+    @Column(name = "temp")
+    private int temp;
 
+    public int getTemp() {
+        return temp;
+    }
+
+    public void setTemp(int temp) {
+        this.temp = temp;
+    }
 
     public String getReason() {
         return reason;
