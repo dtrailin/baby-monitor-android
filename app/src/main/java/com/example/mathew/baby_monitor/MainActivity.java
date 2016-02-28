@@ -19,11 +19,11 @@ public class MainActivity extends AppCompatActivity {
 
     private Emitter.Listener onCry = new Emitter.Listener() {
         @Override
-        public void call(final Object.. args) {
-            getActivity().runOnUiThread(new Runnable() {
+        public void call(final Object... args) {
+            MainActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
+                    
                 }
             });
         }
