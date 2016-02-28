@@ -52,7 +52,7 @@ public class BabyEventAdapter  extends CursorAdapter {
             public void onClick(View v) {
                 Log.d("test", "did the thing");
                 CheckBox checkBox = (CheckBox) v;
-                new Update(BabyEvent.class).set("responded", checkBox.isPressed()).where("timestamp=" + priority);
+                new Update(BabyEvent.class).set("responded", checkBox.isPressed()).where("timestamp=" + priority).execute();
             }
         });
         // Populate fields with extracted properties

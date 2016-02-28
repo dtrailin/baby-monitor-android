@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.activeandroid.query.Delete;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Socket mSocket;
     ListView mListView;
+    BabyEventAdapter babyEventAdapter;
 
     {
         try {
@@ -50,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("button pressed");
+                new Delete().from(BabyEvent.class).executeSingle();
+                babyEventAdapter.notifyDataSetChanged();
             }
         });
 // Find ListView to populate
@@ -58,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
 // Get data cursor
         Cursor todoCursor = BabyEvent.fetchResultCursor();
 // Setup cursor adapter
-        BabyEventAdapter todoAdapter = new BabyEventAdapter(this, todoCursor);
+        babyEventAdapter = new BabyEventAdapter(this, todoCursor);
 // Attach cursor adapter to ListView
-        mListView.setAdapter(todoAdapter);
+        mListView.setAdapter(babyEventAdapter);
     }
 
     @Override
@@ -102,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                         BabyEvent babyEvent = new BabyEvent(message,new java.util.Date().toString());
                         babyEvent.setTemp(temperature);
                         babyEvent.save();
+                        babyEventAdapter.notifyDataSetChanged();
                         mListView.invalidateViews();
                     } catch (JSONException e) {
                         return;
