@@ -2,53 +2,19 @@ package com.example.mathew.baby_monitor;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Socket;
-
-import java.net.URISyntaxException;
-
 
 
 public class MainActivity extends AppCompatActivity {
-
-    private Emitter.Listener onCry = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            MainActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d("stuff","Cry listener working!!");
-                }
-            });
-        }
-    };
-
-    private Socket mSocket;
-    {
-        try {
-//            mSocket = IO.socket("http://baby-monitor.azurewebsites.net:7777");
-            mSocket = IO.socket("http://45.79.134.17:7777");
-        } catch (URISyntaxException e) {}
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        socket stuff
-        mSocket.on("cry", onCry);
-        mSocket.connect();
-        mSocket.emit("cry", "this is a test");
-
-
 
         Button button = (Button) findViewById(R.id.button);
 
@@ -56,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("button pressed");
-                mSocket.emit("cry","Mat pressed a button!!");
             }
         });
 
@@ -84,11 +49,4 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        mSocket.disconnect();
-        mSocket.off("cry", onCry);
-    }
 }
