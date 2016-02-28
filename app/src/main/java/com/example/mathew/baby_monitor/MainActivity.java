@@ -1,5 +1,6 @@
 package com.example.mathew.baby_monitor;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent registrationIntent = new Intent(this, RegistrationService.class);
+        startService(registrationIntent);
 
         Button button = (Button) findViewById(R.id.button);
 

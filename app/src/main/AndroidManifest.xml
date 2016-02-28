@@ -2,9 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mathew.baby_monitor" >
 
+    <permission android:name="com.example.mathew.baby_monitor.permission.C2D_MESSAGE"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="com.example.mathew.baby_monitor.permission.C2D_MESSAGE" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.c2dm.permission.SEND" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name="com.activeandroid.app.Application"
         android:allowBackup="true"
@@ -17,6 +22,35 @@
         <meta-data
             android:name="AA_DB_VERSION"
             android:value="1" />
+        
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.androidc2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.example.matthew.baby_monitor" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".NotificationsListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".RegistrationService"
+            android:exported="false" />
+
+        <service
+            android:name=".TokenRefreshListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
 
         <activity
             android:name=".MainActivity"
