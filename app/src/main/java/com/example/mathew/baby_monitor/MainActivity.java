@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 // Find ListView to populate
-        ListView lvItems = (ListView) findViewById(R.id.babyEventList);
+        mListView= (ListView) findViewById(R.id.babyEventList);
 // Get data cursor
         Cursor todoCursor = BabyEvent.fetchResultCursor();
 // Setup cursor adapter
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                         BabyEvent babyEvent = new BabyEvent(message,new java.util.Date().toString());
                         babyEvent.setTemp(temperature);
                         babyEvent.save();
-                        mListView.refreshDrawableState();
+                        mListView.invalidateViews();
                     } catch (JSONException e) {
                         return;
                     }
