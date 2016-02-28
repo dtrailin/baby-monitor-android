@@ -1,14 +1,22 @@
 package com.example.mathew.baby_monitor;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 import java.util.Date;
 
 /**
  * Created by denis on 28/02/16.
  */
-public class Cry {
+@Table(name = "BabyEvents")
+public class BabyEvents extends Model {
 
+    @Column(name = "reason")
     private String reason;
+    @Column(name = "timestamp", index = true)
     private Date timeReceived;
+    @Column(name = "responded")
     private boolean responded;
 
 
@@ -36,7 +44,7 @@ public class Cry {
         this.responded = responded;
     }
 
-    public Cry(String reason, Date timeReceived) {
+    public BabyEvents(String reason, Date timeReceived) {
 
         this.reason = reason;
         this.timeReceived = timeReceived;
