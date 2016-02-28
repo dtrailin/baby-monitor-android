@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 //        socket stuff
-
+        mSocket.on("cry", onCry);
         mSocket.connect();
         mSocket.emit("cry", "this is a test");
-        mSocket.on("cry", onCry);
+
 
 
         Button button = (Button) findViewById(R.id.button);
@@ -81,5 +81,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        mSocket.disconnect();
+        mSocket.off("cry", onCry);
     }
 }
