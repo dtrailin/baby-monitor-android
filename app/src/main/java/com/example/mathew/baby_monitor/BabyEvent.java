@@ -1,6 +1,7 @@
 package com.example.mathew.baby_monitor;
 
 import android.database.Cursor;
+import android.provider.BaseColumns;
 
 import com.activeandroid.Cache;
 import com.activeandroid.Model;
@@ -24,6 +25,8 @@ public class BabyEvent extends Model {
     private boolean responded;
     @Column(name = "temp")
     private int temp;
+    @Column(name = "threshold")
+    private int threshold;
 
     public int getTemp() {
         return temp;
@@ -71,6 +74,14 @@ public class BabyEvent extends Model {
         // Execute query on the underlying ActiveAndroid SQLite database
         Cursor resultCursor = Cache.openDatabase().rawQuery(resultRecords, null);
         return resultCursor;
+    }
+
+    public void setThreshold(int threshold) {
+        this.threshold = threshold;
+    }
+
+    public int getThreshold() {
+        return threshold;
     }
 }
 

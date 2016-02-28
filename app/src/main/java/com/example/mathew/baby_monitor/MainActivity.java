@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.activeandroid.query.Delete;
+import com.activeandroid.util.SQLiteUtils;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -52,12 +53,13 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Delete().from(BabyEvent.class).executeSingle();
-                babyEventAdapter.notifyDataSetChanged();
-            }
-        });
+                SQLiteUtils.execSql(" DELETE FROM BabyEvent;");
+                Cursor todoCursor = BabyEvent.fetchResultCursor();
+                babyEventAdapter = new BabyEventAdapter(getApplicationContext(), todoCursor);
+                mListView.setAdapter(babyEventAdapter);
+            }});
 // Find ListView to populate
-        mListView= (ListView) findViewById(R.id.babyEventList);
+        mListView = (ListView) findViewById(R.id.babyEventList);
 // Get data cursor
         Cursor todoCursor = BabyEvent.fetchResultCursor();
 // Setup cursor adapter
@@ -91,22 +93,25 @@ public class MainActivity extends AppCompatActivity {
     private Emitter.Listener onCry = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
-            MainActivity.this.runOnUiThread(new Runnable() {
-                @Override
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
                 public void run() {
                     Log.d("gotsuff","a");
                     JSONObject data = (JSONObject) args[0];
-                    String username;
                     String message;
                     try {
                         int temperature = data.getInt("temp");
                         message = data.getString("reason");
+                        int threshold = data.getInt("threshold");
 
                         BabyEvent babyEvent = new BabyEvent(message,new java.util.Date().toString());
                         babyEvent.setTemp(temperature);
+                        babyEvent.setThreshold(threshold);
                         babyEvent.save();
                         babyEventAdapter.notifyDataSetChanged();
-                        mListView.invalidateViews();
+                        Cursor todoCursor = BabyEvent.fetchResultCursor();
+                        babyEventAdapter = new BabyEventAdapter(getApplicationContext(), todoCursor);
+                        mListView.setAdapter(babyEventAdapter);
                     } catch (JSONException e) {
                         return;
                     }

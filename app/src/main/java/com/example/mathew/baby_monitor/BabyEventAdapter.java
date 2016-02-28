@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.activeandroid.query.Select;
@@ -36,25 +37,29 @@ public class BabyEventAdapter  extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, final Cursor cursor) {
         // Find fields to populate in inflated template
+        LinearLayout main =(LinearLayout)view;
         TextView reason = (TextView) view.findViewById(R.id.eventName);
         TextView date = (TextView) view.findViewById(R.id.tvEventTime);
         TextView tempText = (TextView) view.findViewById(R.id.tempView);
-        CheckBox checkBox = (CheckBox) view.findViewById(R.id.hasBeenSeen);
+
         // Extract properties from cursor
         String name = cursor.getString(cursor.getColumnIndexOrThrow(REASON));
         final String priority = cursor.getString(cursor.getColumnIndexOrThrow("timestamp"));
         final int temp = cursor.getInt(cursor.getColumnIndexOrThrow("temp"));
         boolean responded = cursor.getInt(cursor.getColumnIndexOrThrow("responded")) > 0;
+        final int threshold = cursor.getInt(cursor.getColumnIndexOrThrow("threshold"));
+        if(threshold < 667){
+            main.setBackgroundColor(context.getResources().getColor(R.color.yellow));
+        }else if(threshold < 834){
+            main.setBackgroundColor(context.getResources().getColor(R.color.orange));
+        }else{
+            main.setBackgroundColor(context.getResources().getColor(R.color.pink));
+        }
 
-        checkBox.setPressed(responded);
-        checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("test", "did the thing");
-                CheckBox checkBox = (CheckBox) v;
-                new Update(BabyEvent.class).set("responded", checkBox.isPressed()).where("timestamp=" + priority).execute();
-            }
-        });
+        if(temp >= 25){
+            main.setBackgroundColor(context.getResources().getColor(R.color.red));
+        }
+
         // Populate fields with extracted properties
         reason.setText(name);
         date.setText(String.valueOf(priority));
